@@ -13,3 +13,22 @@ body {
 li {
     text-align: center;
 }
+
+li a {
+    color: black;
+}
+
+li a:hover {
+    color: blue;
+}
+
+.repo {
+    display: block;
+    text-indent: 43px;
+    color: red;
+    text-align: center;
+}
+
+.repo:hover {
+    color: blue;
+}
