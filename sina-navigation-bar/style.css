@@ -1,0 +1,20 @@
+div {
+    border-top: 3px solid #ff8500;
+    border-bottom: 1px solid #edeef0;
+    height: 62px;
+}
+
+a {
+    display: inline-block;
+    text-decoration: none;
+    font-family: 'Microsoft Yahei';
+    text-align: center;
+    padding: 20px;
+    color: black;
+    background-color: #fcfcfc;
+    border-collapse: collapse;
+}
+
+a:hover {
+    background-color: #edeef0;
+}
