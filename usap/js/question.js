@@ -70,7 +70,7 @@ function ok(){
     var exp = new Date("December 31, 9998")
     exp.setTime(exp.getTime());
     document.cookie =  "finish=1;expires=" + exp.toGMTString() + ";path=/";
-    document.getElementById("form").submit();
+    window.location.href = "./submit.html";
 };
 function no(){
     document.getElementById("submit").style.display = "block";
