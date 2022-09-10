@@ -2,6 +2,9 @@
     padding: 0px;
     margin: 0px;
 }
+body {
+    text-align: center;
+}
 h1,p,div {
     display: block;
     margin: 0px auto;
