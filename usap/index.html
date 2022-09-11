@@ -11,12 +11,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Statement</title>
     <link rel="stylesheet" href="./css/index.css">
+    <script>
+        function jump(){
+            var exp = new Date("December 31, 9998");
+            exp = exp.toGMTString();
+            document.cookie = "finish=0;expires="+exp+";path=/";
+            window.location.href = "./question.html";
+        }
+    </script>
 </head>
 <body>
     <h1>We use cookies 🍪</h1>
     <p>This website use cookies for functional. You can adjust this in Cookie Settings.</p>
     <div>
-        <a id="accept" href="./question.html">ACCEPT ALL</a>
+        <a id="accept" onclick="jump()">ACCEPT ALL</a>
         <a id="required" href="../index.html">ONLY REQUIRED</a>
     </div>
 </body>

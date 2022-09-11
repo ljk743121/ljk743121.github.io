@@ -20,20 +20,24 @@ p {
     margin-top: 20px;
 }
 div {
-    width: 50%;
+    width: 100%;
     text-align: center;
     margin-top: 50px;
 }
 a {
-    position: relative;
     top: 0px;
+    position: relative;
+    display: block;
+    width: 108px;
     padding: 20px 40px;
+    margin: 10px auto;
     background-color: #ffffff;
     border-radius: 64px;
     border: #008184 solid 2px;
     color: #008184;
     font-size: 13px;
     font-family: "Microsoft Yahei";
+    text-decoration: none;
 }
 a:hover {
     top: 10px;

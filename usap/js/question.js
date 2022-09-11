@@ -1,3 +1,5 @@
+var exp = new Date("December 31, 9998");
+exp = exp.toGMTString();
 function add_id(){
     var collect = document.getElementsByTagName("input")
     for (var i=0;i<collect.length;i++){
@@ -21,15 +23,15 @@ function choose(tagA){
 };
 function save_cookie(id){
     var q = id.split("_");
-    var exp = new Date("December 31, 9998")
-    document.cookie = q[0] + "=" + q[1] + ";expires=" + exp.toGMTString() + ";path=/";
+    document.cookie = q[0] + "=" + q[1] + ";expires=" + exp + ";path=/";
 };
 function check_cookie(){
     var cookie = document.cookie.split(";");
     for (var i=0;i<cookie.length;i++){
         var c=cookie[i].toString().trim().split("=");
-        if (c[0]=="finish"){
+        if (c[0]=="finish" && c[1]=="1"){
             window.location.href = "./submit.html"
+            return 0;
         };
         var s=document.getElementById((c[0]+"_"+c[1]))
         if (s.type=="radio"){
@@ -49,10 +51,16 @@ function check_form(){
                 break;
             };
         };
-        if (t==true && jump!=undefined){
-            window.location.hash = "";
-            window.location.hash ='#q'+(parseInt((jump.name).replace("q",""))+1).toString();
-            document.getElementById(("q"+(parseInt((jump.name).replace("q",""))+1).toString())).style.backgroundColor = "rgba(255,0,0,0.5)";
+        if (t==true){
+            if (jump==undefined){
+                window.location.hash = "";
+                window.location.hash ='#q1';
+                document.getElementById("q1").style.backgroundColor = "rgba(255,0,0,0.5)";
+            }else{
+                window.location.hash = "";
+                window.location.hash ='#q'+(parseInt((jump.name).replace("q",""))+1).toString();
+                document.getElementById(("q"+(parseInt((jump.name).replace("q",""))+1).toString())).style.backgroundColor = "rgba(255,0,0,0.5)";
+            };
             return false;
         };
     };

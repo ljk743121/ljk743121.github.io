@@ -12,14 +12,14 @@ a,img {
     display: block;
 }
 h1 {
-    font-weight: 900;
+    font-weight: 700;
 }
 .area {
     text-align: center;
-    width: 33%;
+    width: 50%;
     margin: 75px auto;
     background-color: #ffffff;
-    padding: 100px 150px;
+    padding: 100px min(150px,10%);
     font-weight: 700;
 }
 .question {
@@ -40,7 +40,7 @@ a:active {
     color: #0000ff;
 }
 img {
-    width: 100%;
+    width: 75%;
     z-index: -1;
 }
 #submit,#ok,#no{
@@ -48,10 +48,11 @@ img {
     font-weight: 700;
     font-family: "Microsoft Yahei";
     margin: 50px 33% 0px;
-    padding: 10px;
+    padding: min(10px,3.3%);
     color: #000000;
     background-color: rgba(0,238,255,0.5);
     border-radius: 10px;
+    font-size: 16px;
 }
 #submit:hover {
     background-color: rgba(0,238,255,1);
