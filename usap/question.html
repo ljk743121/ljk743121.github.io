@@ -1,8 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <script>
-    if (document.cookie==""){
+    var cookie = document.cookie
+    if (cookie==""){
         window.location.href = "./index.html"
+    };
+    if (cookie.indexOf("finish=")!==-1){
+        if (cookie.charAt(cookie.indexOf("finish=")+7)=="1"){
+            window.location.href = "./submit.html";
+        };
     };
 </script>
 <head>

@@ -29,13 +29,11 @@ function check_cookie(){
     var cookie = document.cookie.split(";");
     for (var i=0;i<cookie.length;i++){
         var c=cookie[i].toString().trim().split("=");
-        if (c[0]=="finish" && c[1]=="1"){
-            window.location.href = "./submit.html"
-            return 0;
-        };
-        var s=document.getElementById((c[0]+"_"+c[1]))
-        if (s.type=="radio"){
-            s.checked = "true";
+        if (c[0]!="finish"){
+            var s=document.getElementById((c[0]+"_"+c[1]))
+            if (s.type=="radio"){
+                s.checked = "true";
+            };
         };
     };
 };
