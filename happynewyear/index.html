@@ -75,11 +75,10 @@
         }
         function listen() {
             for (var i = 1; i < 11; i++) {
-                var e = document.getElementById(i.toString())
-                e.addEventListener('animationend', random(e))
+                var e = document.getElementById(i.toString());
+                e.addEventListener('animationend', random(e));
             }
         }
-        window.onload = listen()
         function sleep(time){
             return new Promise((resolve) => setTimeout(resolve, time));
         }
@@ -100,7 +99,7 @@
         }
     </script>
 </head>
-<body>
+<body onload="listen()">
     <div class="top">
         <img src="lantern.png" alt="" class="lt">
         <img src="lantern.png" alt="" class="lt">
@@ -154,6 +153,5 @@
             }
         ]
     });
-    setInterval(listen(),6500)
 </script>
 </html>
