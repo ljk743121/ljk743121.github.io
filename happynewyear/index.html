@@ -6,7 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link href="jquery-ui.css" rel="stylesheet">
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://apps.bdimg.com/libs/jqueryui/1.8.22/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="jquery-ui.min.css">
+    <link rel="stylesheet" href="jquery-ui.structure.min.css">
+    <link rel="stylesheet" href="jquery-ui.theme.min.css">
     <style>
         * {
             margin: 0;
@@ -63,12 +67,11 @@
             }
         }
     </style>
-    <script src="https://cdn.staticfile.org/jquery/3.6.3/jquery.min.js"></script>
     <script>
         var elements = document.getElementsByClassName('fireworks');
         function random(element) {
-            var top = Math.floor(Math.random() * 80 + 10) + '%';
-            var left = Math.floor(Math.random() * 80 + 10) + '%';
+            var top = Math.floor(Math.random() * 60 + 10) + '%';
+            var left = Math.floor(Math.random() * 60 + 10) + '%';
             var delay = Math.floor(Math.random() * 100 + 1) / 25 + 's';
             element.style.setProperty('top', top);
             element.style.setProperty('left', left);
@@ -101,23 +104,22 @@
         <img src="lantern.png" alt="" class="lt">
     </div>
     <div class="typewriter-effect wish" id="text"></div>
-    <div class="fireworks" id="1"><img src="fireworks.png" alt="" width="300px" height="300px"></div>
-    <div class="fireworks" id="2"><img src="fireworks.png" alt="" width="300px" height="300px"></div>
-    <div class="fireworks" id="3"><img src="fireworks.png" alt="" width="300px" height="300px"></div>
-    <div class="fireworks" id="4"><img src="fireworks.png" alt="" width="300px" height="300px"></div>
-    <div class="fireworks" id="5"><img src="fireworks.png" alt="" width="300px" height="300px"></div>
-    <div class="fireworks" id="6"><img src="fireworks.png" alt="" width="300px" height="300px"></div>
-    <div class="fireworks" id="7"><img src="fireworks.png" alt="" width="300px" height="300px"></div>
-    <div class="fireworks" id="8"><img src="fireworks.png" alt="" width="300px" height="300px"></div>
-    <div class="fireworks" id="9"><img src="fireworks.png" alt="" width="300px" height="300px"></div>
-    <div class="fireworks" id="10"><img src="fireworks.png" alt="" width="300px" height="300px"></div>
+    <div class="fireworks" id="1"><img src="fireworks.png" alt="" width="500px" height="500px"></div>
+    <div class="fireworks" id="2"><img src="fireworks.png" alt="" width="500px" height="500px"></div>
+    <div class="fireworks" id="3"><img src="fireworks.png" alt="" width="500px" height="500px"></div>
+    <div class="fireworks" id="4"><img src="fireworks.png" alt="" width="500px" height="500px"></div>
+    <div class="fireworks" id="5"><img src="fireworks.png" alt="" width="500px" height="500px"></div>
+    <div class="fireworks" id="6"><img src="fireworks.png" alt="" width="500px" height="500px"></div>
+    <div class="fireworks" id="7"><img src="fireworks.png" alt="" width="500px" height="500px"></div>
+    <div class="fireworks" id="8"><img src="fireworks.png" alt="" width="500px" height="500px"></div>
+    <div class="fireworks" id="9"><img src="fireworks.png" alt="" width="500px" height="500px"></div>
+    <div class="fireworks" id="10"><img src="fireworks.png" alt="" width="500px" height="500px"></div>
     <audio id="music" loop="loop" preload="preload" src="http://music.163.com/song/media/outer/url?id=333750"></audio>
     <div id="confirm" title="生物课代表送给段老师的祝福">
         <p>这是生物课代表送给我们亲爱的生物老师的新年祝福🎉🎉🎉！（点击按钮控制音乐播放）</p>
         <img src="gift.png" alt="礼物" width="50px" height="50px">
     </div>
 </body>
-<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
 <script>
     function playmusic() {
         var music = document.getElementById("music");
