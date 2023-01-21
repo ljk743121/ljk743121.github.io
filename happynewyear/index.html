@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>新年祝福</title>
     <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://apps.bdimg.com/libs/jqueryui/1.8.22/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="jquery-ui.min.css">
@@ -16,14 +15,12 @@
             margin: 0;
             padding: 0;
         }
-
         body {
             background-image: linear-gradient(red, yellow);
             background-repeat: no-repeat;
             background-size: 100% 100%;
             background-attachment: fixed;
         }
-
         .wish {
             font-family: monospace;
             width: 50%;
@@ -36,12 +33,10 @@
             text-decoration: underline;
             line-height: 25px;
         }
-
         .lt {
             width: 20%;
             margin: 0 6%;
         }
-
         .fireworks {
             position: absolute;
             left: 50%;
@@ -52,51 +47,59 @@
             animation: fireworks 3s infinite;
             filter: brightness(500%);
         }
-
         @keyframes fireworks {
             0% {
                 transform: scale(0);
             }
-
             80% {
                 transform: scale(1);
             }
-
             100% {
                 opacity: 0;
             }
+        }
+        .name {
+            margin-left: 75%;
+            text-decoration: none;
         }
     </style>
     <script>
         var elements = document.getElementsByClassName('fireworks');
         function random(element) {
-            var top = Math.floor(Math.random() * 60 + 10) + '%';
-            var left = Math.floor(Math.random() * 60 + 10) + '%';
+            var top = Math.floor(Math.random() * 60 + 0) + '%';
+            var left = Math.floor(Math.random() * 60 + 0) + '%';
             var delay = Math.floor(Math.random() * 100 + 1) / 25 + 's';
             element.style.setProperty('top', top);
             element.style.setProperty('left', left);
             element.style.setProperty('animation-delay', delay);
         }
-        window.onload = function () {
+        function listen() {
             for (var i = 1; i < 11; i++) {
                 var e = document.getElementById(i.toString())
                 e.addEventListener('animationend', random(e))
             }
         }
+        window.onload = listen()
         function sleep(time){
             return new Promise((resolve) => setTimeout(resolve, time));
         }
         async function type(){
             const typeWriter = document.getElementById('text');
-            const text = '“新竹高于旧竹枝，全凭老干为扶持”\n老师，感谢你几年来对我们的辛勤培育。在新的一年里，我们将更加努力地学习，用点滴进步换取老师的辛苦\n新春送喜，愿您快乐常相伴，平安永相守，幸福常如愿，财运在身边，日子更幸福，快乐更美满，和谐在新年，万事添欢颜，愿老师您新春快乐，幸福无限。';
-            for (var i=0;i<text.length;i++){
-                typeWriter.innerHTML = typeWriter.innerHTML + text[i];
+            const text_ljk = '“新竹高于旧竹枝，全凭老干为扶持”老师，感谢你几年来对我们的辛勤培育。在新的一年里，我们将更加努力地学习，用点滴进步换取老师的辛苦付出\n新春送喜，愿您快乐常相伴，平安永相守，幸福常如愿，财运在身边，日子更幸福，快乐更美满，和谐在新年，万事添欢颜。愿老师您新春快乐，幸福无限。';
+            const text_ljr = '2023年祝老师：平安健康，前兔🐇似锦，扬眉兔🐇气，大展宏🐇兔，兔🐇飞猛进，前兔🐇无量，兔🐇年大吉，新年好运🎇'
+            for (var i=0;i<text_ljk.length;i++){
+                typeWriter.innerHTML = typeWriter.innerHTML + text_ljk[i];
                 await sleep(100);
             }
+            typeWriter.innerHTML = typeWriter.innerHTML + '<p class="name">——李锦阔</p>'
+            for (var i=0;i<text_ljr.length;i++){
+                typeWriter.innerHTML = typeWriter.innerHTML + text_ljr[i];
+                await sleep(100);
+            }
+            typeWriter.innerHTML = typeWriter.innerHTML + '<p class="name">——刘婧蓉</p>'
         }
     </script>
 </head>
-
 <body>
     <div class="top">
         <img src="lantern.png" alt="" class="lt">
@@ -114,7 +117,7 @@
     <div class="fireworks" id="8"><img src="fireworks.png" alt="" width="500px" height="500px"></div>
     <div class="fireworks" id="9"><img src="fireworks.png" alt="" width="500px" height="500px"></div>
     <div class="fireworks" id="10"><img src="fireworks.png" alt="" width="500px" height="500px"></div>
-    <audio id="music" loop="loop" preload="preload" src="http://music.163.com/song/media/outer/url?id=333750"></audio>
+    <audio id="music" loop="loop" preload="preload" src="http://music.163.com/song/media/outer/url?id=1413464902"></audio>
     <div id="confirm" title="生物课代表送给段老师的祝福">
         <p>这是生物课代表送给我们亲爱的生物老师的新年祝福🎉🎉🎉！（点击按钮控制音乐播放）</p>
         <img src="gift.png" alt="礼物" width="50px" height="50px">
@@ -151,6 +154,6 @@
             }
         ]
     });
+    setInterval(listen(),6500)
 </script>
-
 </html>
