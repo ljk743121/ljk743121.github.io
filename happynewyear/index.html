@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="jquery-ui.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-image: linear-gradient(red, yellow);
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            background-attachment: fixed;
+        }
+
+        .wish {
+            font-family: monospace;
+            width: 50%;
+            margin: 100px auto;
+            border: 5px black dashed;
+            padding: 20px 25px;
+            text-align: center;
+            font-weight: 700;
+            font-size: larger;
+            text-decoration: underline;
+            line-height: 25px;
+        }
+
+        .lt {
+            width: 20%;
+            margin: 0 6%;
+        }
+
+        .fireworks {
+            position: absolute;
+            left: 50%;
+            margin-left: -50px;
+            bottom: 60%;
+            margin-bottom: -50px;
+            transform: scale(0);
+            animation: fireworks 3s infinite;
+            filter: brightness(500%);
+        }
+
+        @keyframes fireworks {
+            0% {
+                transform: scale(0);
+            }
+
+            80% {
+                transform: scale(1);
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+    </style>
+    <script src="https://cdn.staticfile.org/jquery/3.6.3/jquery.min.js"></script>
+    <script>
+        var elements = document.getElementsByClassName('fireworks');
+        function random(element) {
+            var top = Math.floor(Math.random() * 80 + 10) + '%';
+            var left = Math.floor(Math.random() * 80 + 10) + '%';
+            var delay = Math.floor(Math.random() * 100 + 1) / 25 + 's';
+            element.style.setProperty('top', top);
+            element.style.setProperty('left', left);
+            element.style.setProperty('animation-delay', delay);
+        }
+        window.onload = function () {
+            for (var i = 1; i < 11; i++) {
+                var e = document.getElementById(i.toString())
+                e.addEventListener('animationend', random(e))
+            }
+        }
+        function sleep(time){
+            return new Promise((resolve) => setTimeout(resolve, time));
+        }
+        async function type(){
+            const typeWriter = document.getElementById('text');
+            const text = '“新竹高于旧竹枝，全凭老干为扶持”\n老师，感谢你几年来对我们的辛勤培育。在新的一年里，我们将更加努力地学习，用点滴进步换取老师的辛苦\n新春送喜，愿您快乐常相伴，平安永相守，幸福常如愿，财运在身边，日子更幸福，快乐更美满，和谐在新年，万事添欢颜，愿老师您新春快乐，幸福无限。';
+            for (var i=0;i<text.length;i++){
+                typeWriter.innerHTML = typeWriter.innerHTML + text[i];
+                await sleep(100);
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="top">
+        <img src="lantern.png" alt="" class="lt">
+        <img src="lantern.png" alt="" class="lt">
+        <img src="lantern.png" alt="" class="lt">
+    </div>
+    <div class="typewriter-effect wish" id="text"></div>
+    <div class="fireworks" id="1"><img src="fireworks.png" alt="" width="300px" height="300px"></div>
+    <div class="fireworks" id="2"><img src="fireworks.png" alt="" width="300px" height="300px"></div>
+    <div class="fireworks" id="3"><img src="fireworks.png" alt="" width="300px" height="300px"></div>
+    <div class="fireworks" id="4"><img src="fireworks.png" alt="" width="300px" height="300px"></div>
+    <div class="fireworks" id="5"><img src="fireworks.png" alt="" width="300px" height="300px"></div>
+    <div class="fireworks" id="6"><img src="fireworks.png" alt="" width="300px" height="300px"></div>
+    <div class="fireworks" id="7"><img src="fireworks.png" alt="" width="300px" height="300px"></div>
+    <div class="fireworks" id="8"><img src="fireworks.png" alt="" width="300px" height="300px"></div>
+    <div class="fireworks" id="9"><img src="fireworks.png" alt="" width="300px" height="300px"></div>
+    <div class="fireworks" id="10"><img src="fireworks.png" alt="" width="300px" height="300px"></div>
+    <audio id="music" loop="loop" preload="preload" src="http://music.163.com/song/media/outer/url?id=333750"></audio>
+    <div id="confirm" title="生物课代表送给段老师的祝福">
+        <p>这是生物课代表送给我们亲爱的生物老师的新年祝福🎉🎉🎉！（点击按钮控制音乐播放）</p>
+        <img src="gift.png" alt="礼物" width="50px" height="50px">
+    </div>
+</body>
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+<script>
+    function playmusic() {
+        var music = document.getElementById("music");
+        if (music.paused) {
+            music.paused = false;
+            music.play();
+        }
+    }
+    $("#confirm").dialog({
+        autoOpen: true,
+        width: $(window).width(),
+        height: $(window).height(),
+        position: { my: "center", at: "center", of: window },
+        buttons: [
+            {
+                text: "播放",
+                click: function () {
+                    playmusic()
+                    type()
+                    $(this).dialog("close");
+                }
+            },
+            {
+                text: "不播放",
+                click: function () {
+                    type()
+                    $(this).dialog("close");
+                }
+            }
+        ]
+    });
+</script>
+
+</html>
