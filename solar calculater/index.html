@@ -25,6 +25,7 @@
     <br>
     <label for="longitude">Longitude (D M S):</label>
     <input type="text" id="longitude" placeholder="e.g., 118 10 00">
+    <div>Or<button onclick="getLocation()">Get Location</button></div>
     <br>
     <button onclick="calculate()">Calculate</button>
     <h2>Results:</h2>
@@ -110,6 +111,45 @@
         document.getElementById('sunrise_time').innerText = `Sunrise Time: ${hourToIso(sunriseTime(longitude, latitude))}`;
         document.getElementById('sunset_time').innerText = `Sunset Time: ${hourToIso(sunsetTime(longitude, latitude))}`;
         document.getElementById('now_solar_degree').innerText = `Now Solar Degree: ${(nowSolarDegree(latitude, longitude) * 180 / Math.PI).toFixed(2)}°`;
+    }
+
+    function locationToValue(loc) {
+        const m = Math.floor((loc % 1) * 60);
+        const s = Math.floor(((loc % 1) * 60) % 1 * 60);
+        loc = Math.floor(loc);
+        return loc.toString()+' '+m.toString()+' '+s.toString();
+    }
+
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition, showError);
+        } else {
+            document.getElementById("location").innerHTML = "Geolocation is not supported by this browser.";
+        }
+    }
+
+    function showPosition(position) {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        document.getElementById("latitude").value = locationToValue(latitude);
+        document.getElementById("longitude").value = locationToValue(longitude);
+    }
+
+    function showError(error) {
+        switch (error.code) {
+            case error.PERMISSION_DENIED:
+                document.getElementById("location").innerHTML = "User denied the request for Geolocation.";
+                break;
+            case error.POSITION_UNAVAILABLE:
+                document.getElementById("location").innerHTML = "Location information is unavailable.";
+                break;
+            case error.TIMEOUT:
+                document.getElementById("location").innerHTML = "The request to get user location timed out.";
+                break;
+            case error.UNKNOWN_ERROR:
+                document.getElementById("location").innerHTML = "An unknown error occurred.";
+                break;
+        }
     }
 </script>
 
