@@ -23,8 +23,20 @@
     <label for="latitude">Latitude (D M S):</label>
     <input type="text" id="latitude" placeholder="e.g., 34 02 00">
     <br>
+    <label for="lat_direction">Direction:</label>
+    <input type="radio" id="north" name="lat_direction" value="north" checked>
+    <label for="north">North</label>
+    <input type="radio" id="south" name="lat_direction" value="south">
+    <label for="south">South</label>
+    <br>
     <label for="longitude">Longitude (D M S):</label>
     <input type="text" id="longitude" placeholder="e.g., 118 10 00">
+    <br>
+    <label for="long_direction">Direction:</label>
+    <input type="radio" id="east" name="long_direction" value="east" checked>
+    <label for="east">East</label>
+    <input type="radio" id="west" name="long_direction" value="west">
+    <label for="west">West</label>
     <div>
         <p>Or<button onclick="getLocation()">Get Location</button></p>
         <p id="location"></p>
@@ -40,8 +52,6 @@
     <p id="sunrise_time"></p>
     <p id="sunset_time"></p>
     <p id="now_solar_degree"></p>
-
-    <script src="script.js"></script>
 </body>
 <script>
     function transformLocation(h, m, s) {
@@ -95,7 +105,7 @@
     function hourToIso(h) {
         const m = Math.floor((h % 1) * 60);
         const s = Math.floor(((h % 1) * 60) % 1 * 60);
-        h = Math.floor(h);
+        h = Math.floor(h)%24;
         return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
     }
 
@@ -103,24 +113,35 @@
         const latInput = document.getElementById('latitude').value.split(' ').map(Number);
         const longInput = document.getElementById('longitude').value.split(' ').map(Number);
 
-        const latitude = transformLocation(latInput[0], latInput[1], latInput[2]) * Math.PI / 180;
-        const longitude = transformLocation(longInput[0], longInput[1], longInput[2]) * Math.PI / 180;
+        const latDirection = document.querySelector('input[name="lat_direction"]:checked').value;
+        const longDirection = document.querySelector('input[name="long_direction"]:checked').value;
+
+        let latitude = transformLocation(latInput[0], latInput[1], latInput[2]) * Math.PI / 180;
+        let longitude = transformLocation(longInput[0], longInput[1], longInput[2]) * Math.PI / 180;
+
+        if (latDirection === 'south') {
+            latitude = -latitude;
+        }
+
+        if (longDirection === 'west') {
+            longitude = -longitude;
+        }
 
         document.getElementById('day').innerText = `Day: ${nDay()}`;
-        document.getElementById('solar_degree').innerText = `Solar Degree: ${(solarDegree() * 180 / Math.PI).toFixed(2)}°`;
-        document.getElementById('max_degree').innerText = `Max Degree: ${(hMax(latitude) * 180 / Math.PI).toFixed(2)}°`;
-        document.getElementById('solar_time').innerText = `Solar Time: ${hourToIso(solarTime(latitude))}`;
-        document.getElementById('noon_time').innerText = `Noon Time: ${hourToIso(noonTime(longitude))}`;
+        document.getElementById('solar_degree').innerText = `Declination Angle: ${(solarDegree() * 180 / Math.PI).toFixed(2)}°`;
+        document.getElementById('max_degree').innerText = `Max Solar Angle: ${(hMax(latitude) * 180 / Math.PI).toFixed(2)}°`;
+        document.getElementById('solar_time').innerText = `Day Time: ${hourToIso(solarTime(latitude))}`;
+        document.getElementById('noon_time').innerText = `Your Location's Noon Time: ${hourToIso(noonTime(longitude))}`;
         document.getElementById('sunrise_time').innerText = `Sunrise Time: ${hourToIso(sunriseTime(longitude, latitude))}`;
         document.getElementById('sunset_time').innerText = `Sunset Time: ${hourToIso(sunsetTime(longitude, latitude))}`;
-        document.getElementById('now_solar_degree').innerText = `Now Solar Degree: ${(nowSolarDegree(latitude, longitude) * 180 / Math.PI).toFixed(2)}°`;
+        document.getElementById('now_solar_degree').innerText = `Your Location's Solar Angle Now: ${(nowSolarDegree(latitude, longitude) * 180 / Math.PI).toFixed(2)}°`;
     }
 
     function locationToValue(loc) {
         const m = Math.floor((loc % 1) * 60);
         const s = Math.floor(((loc % 1) * 60) % 1 * 60);
         loc = Math.floor(loc);
-        return loc.toString()+' '+m.toString()+' '+s.toString();
+        return loc.toString() + ' ' + m.toString() + ' ' + s.toString();
     }
 
     function getLocation() {
@@ -141,10 +162,10 @@
     function showError(error) {
         switch (error.code) {
             case error.PERMISSION_DENIED:
-                document.getElementById("location").innerHTML = "User denied the request for Geolocation.";
+                document.getElementById("location").innerHTML = "User denied the request for Geolocation. You can check if you open the location switch in your settings.";
                 break;
             case error.POSITION_UNAVAILABLE:
-                document.getElementById("location").innerHTML = "Location information is unavailable.You can check if you open the location switch in your settings.";
+                document.getElementById("location").innerHTML = "Location information is unavailable. You can check if you open the location switch in your settings.";
                 break;
             case error.TIMEOUT:
                 document.getElementById("location").innerHTML = "The request to get user location timed out.";
