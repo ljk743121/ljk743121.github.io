@@ -25,7 +25,10 @@
     <br>
     <label for="longitude">Longitude (D M S):</label>
     <input type="text" id="longitude" placeholder="e.g., 118 10 00">
-    <div>Or<button onclick="getLocation()">Get Location</button></div>
+    <div>
+        <p>Or<button onclick="getLocation()">Get Location</button></p>
+        <p id="location"></p>
+    </div>
     <br>
     <button onclick="calculate()">Calculate</button>
     <h2>Results:</h2>
@@ -141,7 +144,7 @@
                 document.getElementById("location").innerHTML = "User denied the request for Geolocation.";
                 break;
             case error.POSITION_UNAVAILABLE:
-                document.getElementById("location").innerHTML = "Location information is unavailable.";
+                document.getElementById("location").innerHTML = "Location information is unavailable.You can check if you open the location switch in your settings.";
                 break;
             case error.TIMEOUT:
                 document.getElementById("location").innerHTML = "The request to get user location timed out.";
