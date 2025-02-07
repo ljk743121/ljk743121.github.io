@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar Time Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        input,
+        button {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Solar Time Calculator</h1>
+    <label for="latitude">Latitude (D M S):</label>
+    <input type="text" id="latitude" placeholder="e.g., 34 02 00">
+    <br>
+    <label for="longitude">Longitude (D M S):</label>
+    <input type="text" id="longitude" placeholder="e.g., 118 10 00">
+    <br>
+    <button onclick="calculate()">Calculate</button>
+    <h2>Results:</h2>
+    <p id="day"></p>
+    <p id="solar_degree"></p>
+    <p id="max_degree"></p>
+    <p id="solar_time"></p>
+    <p id="noon_time"></p>
+    <p id="sunrise_time"></p>
+    <p id="sunset_time"></p>
+    <p id="now_solar_degree"></p>
+
+    <script src="script.js"></script>
+</body>
+<script>
+    function transformLocation(h, m, s) {
+        return h + m / 60 + s / 3600;
+    }
+
+    function transformHour(h = new Date().getHours(), m = new Date().getMinutes(), s = new Date().getSeconds()) {
+        return h + m / 60 + s / 3600;
+    }
+
+    function nDay(m = new Date().getMonth() + 1, d = new Date().getDate()) {
+        const dayMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        const year = new Date().getFullYear();
+        if ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0) dayMonth[1] = 29;
+        if (m === 1) return d;
+        return dayMonth.slice(0, m - 1).reduce((a, b) => a + b, 0) + d;
+    }
+
+    function solarDegree(n = nDay()) {
+        return 23.45 * Math.PI / 180 * Math.sin(2 * Math.PI * (n - 81) / 365);
+    }
+
+    function hMax(lat, n = nDay()) {
+        return Math.PI / 2 - (lat - solarDegree(n));
+    }
+
+    function solarTime(lat, n = nDay()) {
+        return (24 / Math.PI) * Math.acos(-Math.tan(lat) * Math.tan(solarDegree(n)));
+    }
+
+    function noonTime(long) {
+        return (12 - (long * 180 / Math.PI - 120) / 15);
+    }
+
+    function sunriseTime(long, lat, n = nDay()) {
+        return noonTime(long) - (solarTime(lat, n) / 2);
+    }
+
+    function sunsetTime(long, lat, n = nDay()) {
+        return noonTime(long) + (solarTime(lat, n) / 2);
+    }
+
+    function timeDegree(long, h = transformHour()) {
+        return Math.PI / 12 * (h - noonTime(long));
+    }
+
+    function nowSolarDegree(lat, long, n = nDay()) {
+        return Math.asin(Math.cos(lat) * Math.cos(solarDegree(n)) * Math.cos(timeDegree(long)) + Math.sin(lat) * Math.sin(solarDegree(n)));
+    }
+
+    function hourToIso(h) {
+        const m = Math.floor((h % 1) * 60);
+        const s = Math.floor(((h % 1) * 60) % 1 * 60);
+        h = Math.floor(h);
+        return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    }
+
+    function calculate() {
+        const latInput = document.getElementById('latitude').value.split(' ').map(Number);
+        const longInput = document.getElementById('longitude').value.split(' ').map(Number);
+
+        const latitude = transformLocation(latInput[0], latInput[1], latInput[2]) * Math.PI / 180;
+        const longitude = transformLocation(longInput[0], longInput[1], longInput[2]) * Math.PI / 180;
+
+        document.getElementById('day').innerText = `Day: ${nDay()}`;
+        document.getElementById('solar_degree').innerText = `Solar Degree: ${(solarDegree() * 180 / Math.PI).toFixed(2)}°`;
+        document.getElementById('max_degree').innerText = `Max Degree: ${(hMax(latitude) * 180 / Math.PI).toFixed(2)}°`;
+        document.getElementById('solar_time').innerText = `Solar Time: ${hourToIso(solarTime(latitude))}`;
+        document.getElementById('noon_time').innerText = `Noon Time: ${hourToIso(noonTime(longitude))}`;
+        document.getElementById('sunrise_time').innerText = `Sunrise Time: ${hourToIso(sunriseTime(longitude, latitude))}`;
+        document.getElementById('sunset_time').innerText = `Sunset Time: ${hourToIso(sunsetTime(longitude, latitude))}`;
+        document.getElementById('now_solar_degree').innerText = `Now Solar Degree: ${(nowSolarDegree(latitude, longitude) * 180 / Math.PI).toFixed(2)}°`;
+    }
+</script>
+
+</html>
