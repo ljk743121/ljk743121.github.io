@@ -20,6 +20,9 @@
 
 <body>
     <h1>Solar Time Calculator</h1>
+    <label for="date">Date:</label>
+    <input type="date" id="date">
+    <br>
     <label for="latitude">Latitude (D M S):</label>
     <input type="text" id="latitude" placeholder="e.g., 34 02 00">
     <br>
@@ -105,7 +108,7 @@
     function hourToIso(h) {
         const m = Math.floor((h % 1) * 60);
         const s = Math.floor(((h % 1) * 60) % 1 * 60);
-        h = Math.floor(h)%24;
+        h = Math.floor(h) % 24;
         return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
     }
 
@@ -126,15 +129,20 @@
         if (longDirection === 'west') {
             longitude = -longitude;
         }
+        const dateInput = document.getElementById('date').value;
+        const [year, month, day] = dateInput.split('-').map(Number);
+        const selectedDate = new Date(year, month - 1, day);
 
-        document.getElementById('day').innerText = `Day: ${nDay()}`;
-        document.getElementById('solar_degree').innerText = `Declination Angle: ${(solarDegree() * 180 / Math.PI).toFixed(2)}°`;
-        document.getElementById('max_degree').innerText = `Max Solar Angle: ${(hMax(latitude) * 180 / Math.PI).toFixed(2)}°`;
-        document.getElementById('solar_time').innerText = `Day Time: ${hourToIso(solarTime(latitude))}`;
+        const n = nDay(selectedDate.getMonth() + 1, selectedDate.getDate());
+
+        document.getElementById('day').innerText = `Day: ${n}`;
+        document.getElementById('solar_degree').innerText = `Declination Angle: ${(solarDegree(n) * 180 / Math.PI).toFixed(2)}°`;
+        document.getElementById('max_degree').innerText = `Max Solar Angle: ${(hMax(latitude, n) * 180 / Math.PI).toFixed(2)}°`;
+        document.getElementById('solar_time').innerText = `Day Time: ${hourToIso(solarTime(latitude, n))}`;
         document.getElementById('noon_time').innerText = `Your Location's Noon Time: ${hourToIso(noonTime(longitude))}`;
-        document.getElementById('sunrise_time').innerText = `Sunrise Time: ${hourToIso(sunriseTime(longitude, latitude))}`;
-        document.getElementById('sunset_time').innerText = `Sunset Time: ${hourToIso(sunsetTime(longitude, latitude))}`;
-        document.getElementById('now_solar_degree').innerText = `Your Location's Solar Angle Now: ${(nowSolarDegree(latitude, longitude) * 180 / Math.PI).toFixed(2)}°`;
+        document.getElementById('sunrise_time').innerText = `Sunrise Time: ${hourToIso(sunriseTime(longitude, latitude, n))}`;
+        document.getElementById('sunset_time').innerText = `Sunset Time: ${hourToIso(sunsetTime(longitude, latitude, n))}`;
+        document.getElementById('now_solar_degree').innerText = `Your Location's Solar Angle Now: ${(nowSolarDegree(latitude, longitude, n) * 180 / Math.PI).toFixed(2)}°`;
     }
 
     function locationToValue(loc) {
@@ -157,6 +165,7 @@
         const longitude = position.coords.longitude;
         document.getElementById("latitude").value = locationToValue(latitude);
         document.getElementById("longitude").value = locationToValue(longitude);
+        document.getElementById("location").innerHTML = 'Get your location successfully!'
     }
 
     function showError(error) {
