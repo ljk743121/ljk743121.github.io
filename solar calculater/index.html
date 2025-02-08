@@ -57,6 +57,8 @@
     <p id="now_solar_degree"></p>
 </body>
 <script>
+    const MAGIC_NUMBER_DAY_TIME = 10/60;
+    const MAGIC_NUMBER_NOON_TIME = 14/60;
     function transformLocation(h, m, s) {
         return h + m / 60 + s / 3600;
     }
@@ -82,11 +84,11 @@
     }
 
     function solarTime(lat, n = nDay()) {
-        return (24 / Math.PI) * Math.acos(-Math.tan(lat) * Math.tan(solarDegree(n)));
+        return (24 / Math.PI) * Math.acos(-Math.tan(lat) * Math.tan(solarDegree(n)))+MAGIC_NUMBER_DAY_TIME;
     }
 
     function noonTime(long) {
-        return (12 - (long * 180 / Math.PI - 120) / 15);
+        return (12 - (long * 180 / Math.PI - 120) / 15)+MAGIC_NUMBER_NOON_TIME;
     }
 
     function sunriseTime(long, lat, n = nDay()) {
@@ -161,8 +163,8 @@
     }
 
     function showPosition(position) {
-        const latitude = position.coords.latitude;
-        const longitude = position.coords.longitude;
+        const latitude = Math.abs(position.coords.latitude);
+        const longitude = Math.abs(position.coords.longitude);
         document.getElementById("latitude").value = locationToValue(latitude);
         document.getElementById("longitude").value = locationToValue(longitude);
         document.getElementById("location").innerHTML = 'Get your location successfully!'
