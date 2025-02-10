@@ -6,9 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>新年祝福</title>
+    <link rel="stylesheet" href="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
+    <script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/popper.js/2.11.2/umd/popper.min.js"></script>
+    <script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/twitter-bootstrap/5.1.3/js/bootstrap.min.js"></script>
     <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://apps.bdimg.com/libs/jqueryui/1.8.22/jquery-ui.min.js"></script>
-    <link rel="stylesheet" href="jquery-ui.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <style>
         * {
             margin: 0;
@@ -64,6 +67,7 @@
                 opacity: 0;
             }
         }
+
         .name {
             margin-left: 75%;
             text-decoration: none;
@@ -79,57 +83,59 @@
             element.style.setProperty('left', left);
             element.style.setProperty('animation-delay', delay);
         }
-        window.onload = function () {
-            for (var i = 1; i < 11; i++) {
-                var e = document.getElementById(i.toString())
-                e.addEventListener('animationend', random(e))
-            }
-        }
-        function sleep(time){
+        function sleep(time) {
             return new Promise((resolve) => setTimeout(resolve, time));
         }
-        async function type(){
+        async function type() {
             const typeWriter = document.getElementById('text');
             const text_ljk = '“新竹高于旧竹枝，全凭老干为扶持”老师，感谢你几年来对我们的辛勤培育。在新的一年里，我们将更加努力地学习，用点滴进步换取老师的辛苦付出\n新春送喜，愿您快乐常相伴，平安永相守，幸福常如愿，财运在身边，日子更幸福，快乐更美满，和谐在新年，万事添欢颜。愿老师您新春快乐，幸福无限。';
             const text_ljr = '2023年祝老师：平安健康，前兔🐇似锦，扬眉兔🐇气，大展宏🐇兔，兔🐇飞猛进，前兔🐇无量，兔🐇年大吉，新年好运🎇'
-            for (var i=0;i<text_ljk.length;i++){
+            for (var i = 0; i < text_ljk.length; i++) {
                 typeWriter.innerHTML = typeWriter.innerHTML + text_ljk[i];
                 await sleep(100);
             }
-            typeWriter.innerHTML = typeWriter.innerHTML + '<p class="name">——李锦阔</p>'
-            for (var i=0;i<text_ljr.length;i++){
+            typeWriter.innerHTML = typeWriter.innerHTML + '<p class="name">——ljk</p>'
+            for (var i = 0; i < text_ljr.length; i++) {
                 typeWriter.innerHTML = typeWriter.innerHTML + text_ljr[i];
                 await sleep(100);
             }
-            typeWriter.innerHTML = typeWriter.innerHTML + '<p class="name">——刘婧蓉</p>'
+            typeWriter.innerHTML = typeWriter.innerHTML + '<p class="name">——ljr</p>'
         }
     </script>
 </head>
 
 <body>
     <div class="top">
-        <img src="lantern.png" alt="" class="lt">
-        <img src="lantern.png" alt="" class="lt">
-        <img src="lantern.png" alt="" class="lt">
+        <img src="https://s2.loli.net/2025/02/10/XAI48irkxw7Cqje.png" alt="" class="lt">
+        <img src="https://s2.loli.net/2025/02/10/XAI48irkxw7Cqje.png" alt="" class="lt">
+        <img src="https://s2.loli.net/2025/02/10/XAI48irkxw7Cqje.png" alt="" class="lt">
     </div>
     <div class="typewriter-effect wish" id="text"></div>
-    <div class="fireworks" id="1"><img src="fireworks.png" alt="" width="500px" height="500px"></div>
-    <div class="fireworks" id="2"><img src="fireworks.png" alt="" width="500px" height="500px"></div>
-    <div class="fireworks" id="3"><img src="fireworks.png" alt="" width="500px" height="500px"></div>
-    <div class="fireworks" id="4"><img src="fireworks.png" alt="" width="500px" height="500px"></div>
-    <div class="fireworks" id="5"><img src="fireworks.png" alt="" width="500px" height="500px"></div>
-    <div class="fireworks" id="6"><img src="fireworks.png" alt="" width="500px" height="500px"></div>
-    <div class="fireworks" id="7"><img src="fireworks.png" alt="" width="500px" height="500px"></div>
-    <div class="fireworks" id="8"><img src="fireworks.png" alt="" width="500px" height="500px"></div>
-    <div class="fireworks" id="9"><img src="fireworks.png" alt="" width="500px" height="500px"></div>
-    <div class="fireworks" id="10"><img src="fireworks.png" alt="" width="500px" height="500px"></div>
-    <audio id="music" loop="loop" preload="preload" src="https://music.163.com/song/media/outer/url?id=1413464902"></audio>
-    <div id="confirm" title="生物课代表送给段老师的祝福">
+    <div class="fireworks" id="1"><img src="https://s2.loli.net/2025/02/10/APT5cJBzap9HytV.png" alt="" width="500px" height="500px"></div>
+    <div class="fireworks" id="2"><img src="https://s2.loli.net/2025/02/10/APT5cJBzap9HytV.png" alt="" width="500px" height="500px"></div>
+    <div class="fireworks" id="3"><img src="https://s2.loli.net/2025/02/10/APT5cJBzap9HytV.png" alt="" width="500px" height="500px"></div>
+    <div class="fireworks" id="4"><img src="https://s2.loli.net/2025/02/10/APT5cJBzap9HytV.png" alt="" width="500px" height="500px"></div>
+    <div class="fireworks" id="5"><img src="https://s2.loli.net/2025/02/10/APT5cJBzap9HytV.png" alt="" width="500px" height="500px"></div>
+    <div class="fireworks" id="6"><img src="https://s2.loli.net/2025/02/10/APT5cJBzap9HytV.png" alt="" width="500px" height="500px"></div>
+    <div class="fireworks" id="7"><img src="https://s2.loli.net/2025/02/10/APT5cJBzap9HytV.png" alt="" width="500px" height="500px"></div>
+    <div class="fireworks" id="8"><img src="https://s2.loli.net/2025/02/10/APT5cJBzap9HytV.png" alt="" width="500px" height="500px"></div>
+    <div class="fireworks" id="9"><img src="https://s2.loli.net/2025/02/10/APT5cJBzap9HytV.png" alt="" width="500px" height="500px"></div>
+    <div class="fireworks" id="10"><img src="https://s2.loli.net/2025/02/10/APT5cJBzap9HytV.png" alt="" width="500px" height="500px"></div>
+    <audio id="music" loop="loop" preload="preload"
+        src="https://music.163.com/song/media/outer/url?id=1413464902"></audio>
+    <div id="confirm" title="生物课代表送给段老师的祝福" class="text-center">
         <p>这是生物课代表送给我们亲爱的生物老师的新年祝福🎉🎉🎉！（点击按钮控制音乐播放）</p>
-        <img src="gift.png" alt="礼物" width="50px" height="50px">
+        <img src="https://s2.loli.net/2025/02/10/rnIKDQ4yfH7WzPB.png" alt="礼物" width="50px" height="50px">
+        <div id="adBlockerMessage" style="color: orange;">请禁用广告屏蔽器并刷新网页以播放背景音乐。</div>
     </div>
 </body>
 <script>
+    function playFireworks() {
+        for (var i = 1; i < 11; i++) {
+            var e = document.getElementById(i.toString())
+            e.addEventListener('animationend', random(e))
+        }
+    }
     function playmusic() {
         var music = document.getElementById("music");
         if (music.paused) {
@@ -137,7 +143,8 @@
             music.play();
         }
     }
-    $("#confirm").dialog({
+    $(document).ready(function (){
+        $("#confirm").dialog({
         autoOpen: true,
         width: $(window).width(),
         height: $(window).height(),
@@ -148,6 +155,7 @@
                 click: function () {
                     playmusic()
                     type()
+                    playFireworks()
                     $(this).dialog("close");
                 }
             },
@@ -155,11 +163,13 @@
                 text: "不播放",
                 click: function () {
                     type()
+                    playFireworks()
                     $(this).dialog("close");
                 }
             }
         ]
     });
+    })
 </script>
 
 </html>
