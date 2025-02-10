@@ -2,190 +2,240 @@
 <html lang="zh-cn">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solar Time Calculator</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-
-        input,
-        button {
-            margin: 5px 0;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solar Time Calculator</title>
+  <link rel="stylesheet" href="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
+  <script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/popper.js/2.11.2/umd/popper.min.js"></script>
+  <script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/twitter-bootstrap/5.1.3/js/bootstrap.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+  </style>
 </head>
 
 <body>
-    <h1>Solar Time Calculator</h1>
-    <label for="date">日期:</label>
-    <input type="date" id="date">
-    <br>
-    <label for="latitude">纬度 (度 分 秒):</label>
-    <input type="text" id="latitude" placeholder="e.g., 34 02 00">
-    <br>
-    <label for="lat_direction">Direction:</label>
-    <input type="radio" id="north" name="lat_direction" value="north" checked>
-    <label for="north">北纬</label>
-    <input type="radio" id="south" name="lat_direction" value="south">
-    <label for="south">南纬</label>
-    <br>
-    <label for="longitude">经度 (度 分 秒):</label>
-    <input type="text" id="longitude" placeholder="e.g., 118 10 00">
-    <br>
-    <label for="long_direction">Direction:</label>
-    <input type="radio" id="east" name="long_direction" value="east" checked>
-    <label for="east">东经</label>
-    <input type="radio" id="west" name="long_direction" value="west">
-    <label for="west">西经</label>
-    <div>
-        <p>Or<button onclick="getLocation()">获取当前位置</button></p>
-        <p id="location"></p>
-    </div>
-    <br>
-    <button onclick="calculate()">计算</button>
-    <h2>结果（时间以北京时间(UTC+8)为标准）:</h2>
-    <p id="day"></p>
-    <p id="solar_degree"></p>
-    <p id="max_degree"></p>
-    <p id="solar_time"></p>
-    <p id="noon_time"></p>
-    <p id="sunrise_time"></p>
-    <p id="sunset_time"></p>
-    <p id="now_solar_degree"></p>
-</body>
-<script>
-    const MAGIC_NUMBER_DAY_TIME = 10/60;
-    const MAGIC_NUMBER_NOON_TIME = 14/60;
+  <div class="container">
+    <h1 class="text-center mb-4">Solar Time Calculator</h1>
+    <form>
+      <div class="form-group">
+        <label for="date">日期:</label>
+        <input type="date" class="form-control" id="date">
+      </div>
+      <div class="form-group">
+        <label for="latitude">纬度 (度 分 秒):</label>
+        <input type="text" class="form-control" id="latitude" placeholder="e.g., 34 02 00">
+      </div>
+      <div class="form-group">
+        <label for="lat_direction">方向:</label>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="lat_direction" id="north" value="north" checked>
+          <label class="form-check-label" for="north">北纬</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="lat_direction" id="south" value="south">
+          <label class="form-check-label" for="south">南纬</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="longitude">经度 (度 分 秒):</label>
+        <input type="text" class="form-control" id="longitude" placeholder="e.g., 118 10 00">
+      </div>
+      <div class="form-group">
+        <label for="long_direction">方向:</label>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="long_direction" id="east" value="east" checked>
+          <label class="form-check-label" for="east">东经</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="long_direction" id="west" value="west">
+          <label class="form-check-label" for="west">西经</label>
+        </div>
+      </div>
+      <div class="form-group d-flex justify-content-center align-items-center">
+        <p>或者<button type="button" class="btn btn-primary" onclick="getLocation()">获取当前位置</button></p>
+      </div>
+      <p id="location" class="text-center"></p>
+      <button type="button" class="btn btn-success w-100" onclick="calculate()">计算</button>
+    </form>
+    <h2 class="mt-4">结果（时间以北京时间(UTC+8)为标准）:</h2>
+    <table id="resultTable" class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th>名称</th>
+          <th>值</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>当前在一年中的天数</td>
+          <td id="day"></td>
+        </tr>
+        <tr>
+          <td>当天太阳赤纬角</td>
+          <td id="solar_degree"></td>
+        </tr>
+        <tr>
+          <td>当天最大太阳高度角</td>
+          <td id="max_degree"></td>
+        </tr>
+        <tr>
+          <td>日照时长</td>
+          <td id="solar_time"></td>
+        </tr>
+        <tr>
+          <td>当地正午时间</td>
+          <td id="noon_time"></td>
+        </tr>
+        <tr>
+          <td>当地日出时间</td>
+          <td id="sunrise_time"></td>
+        </tr>
+        <tr>
+          <td>当地日落时间</td>
+          <td id="sunset_time"></td>
+        </tr>
+        <tr>
+          <td>当地现在的太阳高度角</td>
+          <td id="now_solar_degree"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <script>
+    // 保持原有 JavaScript 代码不变
+    const MAGIC_NUMBER_DAY_TIME = 10 / 60;
+    const MAGIC_NUMBER_NOON_TIME = 14 / 60;
     function transformLocation(h, m, s) {
-        return h + m / 60 + s / 3600;
+      return h + m / 60 + s / 3600;
     }
 
     function transformHour(h = new Date().getHours(), m = new Date().getMinutes(), s = new Date().getSeconds()) {
-        return h + m / 60 + s / 3600;
+      return h + m / 60 + s / 3600;
     }
 
     function nDay(m = new Date().getMonth() + 1, d = new Date().getDate()) {
-        const dayMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-        const year = new Date().getFullYear();
-        if ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0) dayMonth[1] = 29;
-        if (m === 1) return d;
-        return dayMonth.slice(0, m - 1).reduce((a, b) => a + b, 0) + d;
+      const dayMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+      const year = new Date().getFullYear();
+      if ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0) dayMonth[1] = 29;
+      if (m === 1) return d;
+      return dayMonth.slice(0, m - 1).reduce((a, b) => a + b, 0) + d;
     }
 
     function solarDegree(n = nDay()) {
-        return 23.45 * Math.PI / 180 * Math.sin(2 * Math.PI * (n - 81) / 365);
+      return 23.45 * Math.PI / 180 * Math.sin(2 * Math.PI * (n - 81) / 365);
     }
 
     function hMax(lat, n = nDay()) {
-        return Math.PI / 2 - (lat - solarDegree(n));
+      return Math.PI / 2 - (lat - solarDegree(n));
     }
 
     function solarTime(lat, n = nDay()) {
-        return (24 / Math.PI) * Math.acos(-Math.tan(lat) * Math.tan(solarDegree(n)))+MAGIC_NUMBER_DAY_TIME;
+      return (24 / Math.PI) * Math.acos(-Math.tan(lat) * Math.tan(solarDegree(n))) + MAGIC_NUMBER_DAY_TIME;
     }
 
     function noonTime(long) {
-        return (12 - (long * 180 / Math.PI - 120) / 15)+MAGIC_NUMBER_NOON_TIME;
+      return (12 - (long * 180 / Math.PI - 120) / 15) + MAGIC_NUMBER_NOON_TIME;
     }
 
     function sunriseTime(long, lat, n = nDay()) {
-        return noonTime(long) - (solarTime(lat, n) / 2);
+      return noonTime(long) - (solarTime(lat, n) / 2);
     }
 
     function sunsetTime(long, lat, n = nDay()) {
-        return noonTime(long) + (solarTime(lat, n) / 2);
+      return noonTime(long) + (solarTime(lat, n) / 2);
     }
 
     function timeDegree(long, h = transformHour()) {
-        return Math.PI / 12 * (h - noonTime(long));
+      return Math.PI / 12 * (h - noonTime(long));
     }
 
     function nowSolarDegree(lat, long, n = nDay()) {
-        return Math.asin(Math.cos(lat) * Math.cos(solarDegree(n)) * Math.cos(timeDegree(long)) + Math.sin(lat) * Math.sin(solarDegree(n)));
+      return Math.asin(Math.cos(lat) * Math.cos(solarDegree(n)) * Math.cos(timeDegree(long)) + Math.sin(lat) * Math.sin(solarDegree(n)));
     }
 
     function hourToIso(h) {
-        const m = Math.floor((h % 1) * 60);
-        const s = Math.floor(((h % 1) * 60) % 1 * 60);
-        h = Math.floor(h) % 24;
-        return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+      const m = Math.floor((h % 1) * 60);
+      const s = Math.floor(((h % 1) * 60) % 1 * 60);
+      h = Math.floor(h) % 24;
+      return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
     }
 
     function calculate() {
-        const latInput = document.getElementById('latitude').value.split(' ').map(Number);
-        const longInput = document.getElementById('longitude').value.split(' ').map(Number);
+      const latInput = document.getElementById('latitude').value.split(' ').map(Number);
+      const longInput = document.getElementById('longitude').value.split(' ').map(Number);
 
-        const latDirection = document.querySelector('input[name="lat_direction"]:checked').value;
-        const longDirection = document.querySelector('input[name="long_direction"]:checked').value;
+      const latDirection = document.querySelector('input[name="lat_direction"]:checked').value;
+      const longDirection = document.querySelector('input[name="long_direction"]:checked').value;
 
-        let latitude = transformLocation(latInput[0], latInput[1], latInput[2]) * Math.PI / 180;
-        let longitude = transformLocation(longInput[0], longInput[1], longInput[2]) * Math.PI / 180;
+      let latitude = transformLocation(latInput[0], latInput[1], latInput[2]) * Math.PI / 180;
+      let longitude = transformLocation(longInput[0], longInput[1], longInput[2]) * Math.PI / 180;
 
-        if (latDirection === 'south') {
-            latitude = -latitude;
-        }
+      if (latDirection === 'south') {
+        latitude = -latitude;
+      }
 
-        if (longDirection === 'west') {
-            longitude = -longitude;
-        }
-        const dateInput = document.getElementById('date').value;
-        const [year, month, day] = dateInput.split('-').map(Number);
-        const selectedDate = new Date(year, month - 1, day);
+      if (longDirection === 'west') {
+        longitude = -longitude;
+      }
+      const dateInput = document.getElementById('date').value;
+      const [year, month, day] = dateInput.split('-').map(Number);
+      const selectedDate = new Date(year, month - 1, day);
 
-        const n = nDay(selectedDate.getMonth() + 1, selectedDate.getDate());
+      const n = nDay(selectedDate.getMonth() + 1, selectedDate.getDate());
 
-        document.getElementById('day').innerText = `当前在一年中的天数: ${n}`;
-        document.getElementById('solar_degree').innerText = `当天太阳赤纬角: ${(solarDegree(n) * 180 / Math.PI).toFixed(2)}°`;
-        document.getElementById('max_degree').innerText = `当天最大太阳高度角: ${(hMax(latitude, n) * 180 / Math.PI).toFixed(2)}°`;
-        document.getElementById('solar_time').innerText = `日照时长: ${hourToIso(solarTime(latitude, n))}`;
-        document.getElementById('noon_time').innerText = `当地正午时间: ${hourToIso(noonTime(longitude))}`;
-        document.getElementById('sunrise_time').innerText = `当地日出时间: ${hourToIso(sunriseTime(longitude, latitude, n))}`;
-        document.getElementById('sunset_time').innerText = `当地日落时间: ${hourToIso(sunsetTime(longitude, latitude, n))}`;
-        document.getElementById('now_solar_degree').innerText = `当地现在的太阳高度角: ${(nowSolarDegree(latitude, longitude, n) * 180 / Math.PI).toFixed(2)}°`;
+      document.getElementById('day').innerText = n;
+      document.getElementById('solar_degree').innerText = `${(solarDegree(n) * 180 / Math.PI).toFixed(2)}°`;
+      document.getElementById('max_degree').innerText = `${(hMax(latitude, n) * 180 / Math.PI).toFixed(2)}°`;
+      document.getElementById('solar_time').innerText = hourToIso(solarTime(latitude, n));
+      document.getElementById('noon_time').innerText = hourToIso(noonTime(longitude));
+      document.getElementById('sunrise_time').innerText = hourToIso(sunriseTime(longitude, latitude, n));
+      document.getElementById('sunset_time').innerText = hourToIso(sunsetTime(longitude, latitude, n));
+      document.getElementById('now_solar_degree').innerText = `${(nowSolarDegree(latitude, longitude, n) * 180 / Math.PI).toFixed(2)}°`;
     }
 
     function locationToValue(loc) {
-        const m = Math.floor((loc % 1) * 60);
-        const s = Math.floor(((loc % 1) * 60) % 1 * 60);
-        loc = Math.floor(loc);
-        return loc.toString() + ' ' + m.toString() + ' ' + s.toString();
+      const m = Math.floor((loc % 1) * 60);
+      const s = Math.floor(((loc % 1) * 60) % 1 * 60);
+      loc = Math.floor(loc);
+      return loc.toString() + ' ' + m.toString() + ' ' + s.toString();
     }
 
     function getLocation() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition, showError);
-        } else {
-            document.getElementById("location").innerHTML = "Geolocation is not supported by this browser.";
-        }
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+      } else {
+        document.getElementById("location").innerHTML = "Geolocation is not supported by this browser.";
+      }
     }
 
     function showPosition(position) {
-        const latitude = Math.abs(position.coords.latitude);
-        const longitude = Math.abs(position.coords.longitude);
-        document.getElementById("latitude").value = locationToValue(latitude);
-        document.getElementById("longitude").value = locationToValue(longitude);
-        document.getElementById("location").innerHTML = 'Get your location successfully!'
+      const latitude = Math.abs(position.coords.latitude);
+      const longitude = Math.abs(position.coords.longitude);
+      document.getElementById("latitude").value = locationToValue(latitude);
+      document.getElementById("longitude").value = locationToValue(longitude);
+      document.getElementById("location").innerHTML = 'Get your location successfully!'
     }
 
     function showError(error) {
-        switch (error.code) {
-            case error.PERMISSION_DENIED:
-                document.getElementById("location").innerHTML = "User denied the request for Geolocation. You can check if you open the location switch in your settings.";
-                break;
-            case error.POSITION_UNAVAILABLE:
-                document.getElementById("location").innerHTML = "Location information is unavailable. You can check if you open the location switch in your settings.";
-                break;
-            case error.TIMEOUT:
-                document.getElementById("location").innerHTML = "The request to get user location timed out.";
-                break;
-            case error.UNKNOWN_ERROR:
-                document.getElementById("location").innerHTML = "An unknown error occurred.";
-                break;
-        }
+      switch (error.code) {
+        case error.PERMISSION_DENIED:
+          document.getElementById("location").innerHTML = "User denied the request for Geolocation. You can check if you open the location switch in your settings.";
+          break;
+        case error.POSITION_UNAVAILABLE:
+          document.getElementById("location").innerHTML = "Location information is unavailable. You can check if you open the location switch in your settings.";
+          break;
+        case error.TIMEOUT:
+          document.getElementById("location").innerHTML = "The request to get user location timed out.";
+          break;
+        case error.UNKNOWN_ERROR:
+          document.getElementById("location").innerHTML = "An unknown error occurred.";
+          break;
+      }
     }
-</script>
+  </script>
+</body>
 
 </html>
