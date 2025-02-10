@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cn">
 
 <head>
     <meta charset="UTF-8">
@@ -20,33 +20,33 @@
 
 <body>
     <h1>Solar Time Calculator</h1>
-    <label for="date">Date:</label>
+    <label for="date">日期:</label>
     <input type="date" id="date">
     <br>
-    <label for="latitude">Latitude (D M S):</label>
+    <label for="latitude">纬度 (度 分 秒):</label>
     <input type="text" id="latitude" placeholder="e.g., 34 02 00">
     <br>
     <label for="lat_direction">Direction:</label>
     <input type="radio" id="north" name="lat_direction" value="north" checked>
-    <label for="north">North</label>
+    <label for="north">北纬</label>
     <input type="radio" id="south" name="lat_direction" value="south">
-    <label for="south">South</label>
+    <label for="south">南纬</label>
     <br>
-    <label for="longitude">Longitude (D M S):</label>
+    <label for="longitude">经度 (度 分 秒):</label>
     <input type="text" id="longitude" placeholder="e.g., 118 10 00">
     <br>
     <label for="long_direction">Direction:</label>
     <input type="radio" id="east" name="long_direction" value="east" checked>
-    <label for="east">East</label>
+    <label for="east">东经</label>
     <input type="radio" id="west" name="long_direction" value="west">
-    <label for="west">West</label>
+    <label for="west">西经</label>
     <div>
-        <p>Or<button onclick="getLocation()">Get Location</button></p>
+        <p>Or<button onclick="getLocation()">获取当前位置</button></p>
         <p id="location"></p>
     </div>
     <br>
-    <button onclick="calculate()">Calculate</button>
-    <h2>Results:</h2>
+    <button onclick="calculate()">计算</button>
+    <h2>结果（时间以北京时间(UTC+8)为标准）:</h2>
     <p id="day"></p>
     <p id="solar_degree"></p>
     <p id="max_degree"></p>
@@ -137,14 +137,14 @@
 
         const n = nDay(selectedDate.getMonth() + 1, selectedDate.getDate());
 
-        document.getElementById('day').innerText = `Day: ${n}`;
-        document.getElementById('solar_degree').innerText = `Declination Angle: ${(solarDegree(n) * 180 / Math.PI).toFixed(2)}°`;
-        document.getElementById('max_degree').innerText = `Max Solar Angle: ${(hMax(latitude, n) * 180 / Math.PI).toFixed(2)}°`;
-        document.getElementById('solar_time').innerText = `Day Time: ${hourToIso(solarTime(latitude, n))}`;
-        document.getElementById('noon_time').innerText = `Your Location's Noon Time: ${hourToIso(noonTime(longitude))}`;
-        document.getElementById('sunrise_time').innerText = `Sunrise Time: ${hourToIso(sunriseTime(longitude, latitude, n))}`;
-        document.getElementById('sunset_time').innerText = `Sunset Time: ${hourToIso(sunsetTime(longitude, latitude, n))}`;
-        document.getElementById('now_solar_degree').innerText = `Your Location's Solar Angle Now: ${(nowSolarDegree(latitude, longitude, n) * 180 / Math.PI).toFixed(2)}°`;
+        document.getElementById('day').innerText = `当前在一年中的天数: ${n}`;
+        document.getElementById('solar_degree').innerText = `当天太阳赤纬角: ${(solarDegree(n) * 180 / Math.PI).toFixed(2)}°`;
+        document.getElementById('max_degree').innerText = `当天最大太阳高度角: ${(hMax(latitude, n) * 180 / Math.PI).toFixed(2)}°`;
+        document.getElementById('solar_time').innerText = `日照时长: ${hourToIso(solarTime(latitude, n))}`;
+        document.getElementById('noon_time').innerText = `当地正午时间: ${hourToIso(noonTime(longitude))}`;
+        document.getElementById('sunrise_time').innerText = `当地日出时间: ${hourToIso(sunriseTime(longitude, latitude, n))}`;
+        document.getElementById('sunset_time').innerText = `当地日落时间: ${hourToIso(sunsetTime(longitude, latitude, n))}`;
+        document.getElementById('now_solar_degree').innerText = `当地现在的太阳高度角: ${(nowSolarDegree(latitude, longitude, n) * 180 / Math.PI).toFixed(2)}°`;
     }
 
     function locationToValue(loc) {
